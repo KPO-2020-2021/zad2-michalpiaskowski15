@@ -1,7 +1,7 @@
 #include "LZespolona.hh"
 #include <cmath>
-
-#define MIN_DIFF 0.00001
+#include <iostream>
+#include <iomanip>
 
 /*!
  * Realizuje porównanie dwoch liczb zespolonych.
@@ -110,4 +110,48 @@ LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2)
   Wynik.re = ((Skl1.re*Skl2.re)+(Skl1.im*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2));           /*korzystam z przeksztalconego wzoru sprzezenia*/
   Wynik.im = ((Skl1.im*Skl2.re)-(Skl1.re*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2));
   return Wynik;
+}
+
+
+/* Wyswietl LZespolona*/
+std::ostream & operator <<( std::ostream & s, LZespolona Skl1 )
+{
+    return s << "(" << std::noshowpos << Skl1.re << std::showpos << Skl1.im << "i)" << std::noshowpos;
+}
+
+/*Wczytaj LZespolona*/
+std::istream & operator >> (std::istream &StrWej, LZespolona &LZesp)
+{
+  char Nawias, Litera;
+  StrWej >> Nawias;
+  if (StrWej.fail())
+    return StrWej;
+  if (Nawias != '(')
+    {
+      StrWej.setstate(std::ios::failbit);
+      return StrWej;
+    }
+  StrWej >> LZesp.re;
+  if (StrWej.fail())
+    return StrWej;
+  StrWej >> LZesp.im;
+  if (StrWej.fail())
+    return StrWej;
+  StrWej >> Litera;
+  if (StrWej.fail())
+    return StrWej;
+  if (Litera !='i')
+    {
+      StrWej.setstate(std::ios::failbit);
+      return StrWej;
+    }
+  StrWej >> Nawias;
+  if(StrWej.fail())
+    return StrWej;
+  if (Nawias !=')')
+    {
+      StrWej.setstate(std::ios::failbit);
+      return StrWej;
+    }
+  return StrWej;
 }

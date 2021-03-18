@@ -19,7 +19,7 @@ struct  LZespolona
   };
 
 
-/*Zapowiedzi definicji*/
+/*Definicje*/
 
 bool  operator == (LZespolona  Skl1,  LZespolona  Skl2);
 

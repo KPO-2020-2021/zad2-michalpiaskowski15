@@ -2,6 +2,7 @@
 #define LZESPOLONA_HH
 #include <ostream>
 #include <istream>
+
 /*!
  *  Plik zawiera definicje struktury LZesplona oraz zapowiedzi
  *  przeciazen operatorow arytmetycznych dzialajacych na tej 
@@ -22,6 +23,7 @@ struct  LZespolona
 /*Definicje*/
 
 bool  operator == (LZespolona  Skl1,  LZespolona  Skl2);
+bool  operator != (LZespolona  Skl1,  LZespolona  Skl2);
 
 
 LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2);

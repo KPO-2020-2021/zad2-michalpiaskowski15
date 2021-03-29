@@ -10,5 +10,5 @@
 /*
  * Tu nalezy zdefiniowac funkcje, ktore definiuja model statystyki 
  */
-void Statystyka(int Poprawne);
+void Statystyka(int poprawne, int niepoprawne, int ilosc_pytan);
 #endif

@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <iomanip>
+#include <stdexcept>
 
 /*!
  * Realizuje porównanie dwoch liczb zespolonych.
@@ -11,12 +12,31 @@
  * Zwraca:
  *    True dla równych liczb zespolonych.
  */
+int poprawne=0;
+int niepoprawne=0;
+int ilosc_pytan=0;
+bool  operator != (LZespolona  Skl1,  LZespolona  Skl2){
+  if ((Skl1.re != Skl2.re)||(Skl1.im != Skl2.im))
+    {
+      return true;
+    }
+  else {
+    return false;
+  }
+}
 
 bool  operator == (LZespolona  Skl1,  LZespolona  Skl2){
   if ((Skl1.re == Skl2.re) && (Skl1.im == Skl2.im))
-    return true;
-  else
+    {
+      poprawne++;
+      ilosc_pytan++;
+      return true;
+    }
+  else {
+    niepoprawne++;
+    ilosc_pytan++;
     return false;
+  }
   //alternatywnie, dla MIN_DIFF i wyników od użytkownika
   /*
   if abs(Skl1.re - Skl2.re) <= MIN_DIFF && abs(Skl1.im - Skl2.im) <= MIN_DIFF
@@ -107,8 +127,15 @@ LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2)
 {
   LZespolona  Wynik;
 
-  Wynik.re = ((Skl1.re*Skl2.re)+(Skl1.im*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2));           /*korzystam z przeksztalconego wzoru sprzezenia*/
-  Wynik.im = ((Skl1.im*Skl2.re)-(Skl1.re*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2));
+  if (((pow(Skl2.re, 2)+pow(Skl2.im, 2)==0))) 
+    {
+        throw std::runtime_error("Math error: Attempted to divide by Zero\n");
+    }
+  if (((pow(Skl2.re, 2)+pow(Skl2.im, 2)!=0))) 
+    {
+      Wynik.re = ((Skl1.re*Skl2.re)+(Skl1.im*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2));           /*korzystam z przeksztalconego wzoru sprzezenia*/
+      Wynik.im = ((Skl1.im*Skl2.re)-(Skl1.re*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2));
+    }
   return Wynik;
 }
 
@@ -155,3 +182,4 @@ std::istream & operator >> (std::istream &StrWej, LZespolona &LZesp)
     }
   return StrWej;
 }
+

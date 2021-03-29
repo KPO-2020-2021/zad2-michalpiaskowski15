@@ -31,7 +31,7 @@ struct WyrazenieZesp
 
 
 void Wyswietl(WyrazenieZesp  WyrZ);
-LZespolona Oblicz(WyrazenieZesp  WyrZ);
+LZespolona Obliczenia(WyrazenieZesp  &WyrZ);
 std::ostream & operator << (std::ostream & s, WyrazenieZesp WyrZ);
 std::ostream & operator << (std::ostream & s, Operator Oper);
 #endif

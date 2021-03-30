@@ -34,6 +34,7 @@ int main(int argc, char **argv)
   WyrazenieZesp WyrZ;
   LZespolona Dzialanie;
   LZespolona Wprowadzona_Odpowiedz;
+  Statystyki s;
   while (PobierzNastpnePytanie(&BazaT,&WyrZ)) {
     std::cout << WyrZ << std::endl;
     try
@@ -68,6 +69,8 @@ int main(int argc, char **argv)
           if(proby==3)
           {
             std::cout << "Wykorzystales wszystkie proby. Poprawny zapis:" << std::endl;
+            s.niepoprawne++;
+            s.ilosc_pytan++;
             std::cout << Dzialanie << std::endl;
             break;
           }
@@ -77,22 +80,28 @@ int main(int argc, char **argv)
           if(Wprowadzona_Odpowiedz==Dzialanie)
             {
               std::cout << "Brawo! Udzieliles poprawnej odpowiedzi we wlasciwym formacie :3" << std::endl;
+              s.poprawne++;
+              s.ilosc_pytan++;
               break;
             }
           else if (Wprowadzona_Odpowiedz!=Dzialanie)
             {
               std::cout << "Bledna odpowiedz." << std::endl;
+              s.niepoprawne++;
+              s.ilosc_pytan++;
               break;
             }
         }
       }while(proby<=3);
       std::cout << "Teraz przejdziesz do kolejnego przykladu." << std::endl;
+      
   }
   
 
   std::cout << std::endl;
   std::cout << " Koniec testu" << std::endl;
-  std::cout << Statystyka << std::endl;
+  std::cout << s.ilosc_pytan << std::endl;
+  Statystyka(s.poprawne, s.niepoprawne, s.ilosc_pytan);
   std::cout << std::endl;
 
 }

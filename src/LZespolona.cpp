@@ -12,9 +12,7 @@
  * Zwraca:
  *    True dla równych liczb zespolonych.
  */
-int poprawne=0;
-int niepoprawne=0;
-int ilosc_pytan=0;
+
 bool  operator != (LZespolona  Skl1,  LZespolona  Skl2){
   if ((Skl1.re != Skl2.re)||(Skl1.im != Skl2.im))
     {
@@ -28,13 +26,9 @@ bool  operator != (LZespolona  Skl1,  LZespolona  Skl2){
 bool  operator == (LZespolona  Skl1,  LZespolona  Skl2){
   if ((Skl1.re == Skl2.re) && (Skl1.im == Skl2.im))
     {
-      poprawne++;
-      ilosc_pytan++;
       return true;
     }
   else {
-    niepoprawne++;
-    ilosc_pytan++;
     return false;
   }
   //alternatywnie, dla MIN_DIFF i wyników od użytkownika
@@ -72,8 +66,11 @@ LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2){
  *    Wynik dzielenia dwoch skladnikow przekazanych jako parametry.
  */
 LZespolona  operator / (LZespolona  Skl1,  double  Skl2){
+  if(Skl2==0)
+  {
+    throw std::runtime_error("Math error: Attempted to divide by Zero\n");
+  }
   LZespolona  Wynik;
-
   Wynik.re = Skl1.re / Skl2;
   Wynik.im = Skl1.im / Skl2;
   return Wynik;
@@ -109,7 +106,7 @@ LZespolona  operator * (LZespolona  Skl1,  LZespolona  Skl2)
 {
   LZespolona  Wynik;
 
-  Wynik.re = ((Skl1.re*Skl1.im)-(Skl2.re*Skl2.im));
+  Wynik.re = ((Skl1.re*Skl2.re)-(Skl1.im*Skl2.im));
   Wynik.im = ((Skl1.re*Skl2.im)+(Skl2.re*Skl1.im));
   return Wynik;
 }
@@ -127,9 +124,9 @@ LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2)
 {
   LZespolona  Wynik;
 
-  if (((pow(Skl2.re, 2)+pow(Skl2.im, 2)==0))) 
+  if ((((pow(Skl2.re, 2)==0)&&(pow(Skl2.im, 2)==0)))) 
     {
-        throw std::runtime_error("Math error: Attempted to divide by Zero\n");
+      throw std::runtime_error("Math error: Attempted to divide by Zero\n");
     }
   if (((pow(Skl2.re, 2)+pow(Skl2.im, 2)!=0))) 
     {

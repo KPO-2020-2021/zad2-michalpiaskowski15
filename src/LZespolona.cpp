@@ -56,6 +56,26 @@ LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2){
   return Wynik;
 }
 
+/*!
+ * Realizuje dodanie dwoch liczb zespolonych przez nadpisanie.
+ * Argumenty:
+ *    Skl1 - pierwszy skladnik dodawania,
+ *    Skl2 - drugi skladnik dodawania.
+ * Zwraca:
+ *    Sume dwoch skladnikow przekazanych jako parametry.
+ */
+LZespolona  operator += (LZespolona  &Skl1,  LZespolona const &Skl2){
+  LZespolona  Wynik;
+  Wynik.re = 0;
+  Wynik.im = 0;
+  Wynik.re = Wynik.re + Skl1.re + Skl2.re;
+  Wynik.im = Wynik.im + Skl1.im + Skl2.im;
+  
+
+
+  return Wynik;
+}
+
 
 /*!
  * Realizuje dzielenie liczby zespolonej przez skakar.
@@ -135,6 +155,79 @@ LZespolona  operator / (LZespolona  Skl1,  LZespolona  Skl2)
     }
   return Wynik;
 }
+
+/*!
+ * Realizuje dzielenie dwoch liczb zespolonych przez nadpisanie.
+ * Argumenty:
+ *    Skl1 - pierwszy skladnik dzielenia,
+ *    Skl2 - drugi skladnik dzielenia.
+ * Zwraca:
+ *    Iloraz dwoch skladnikow przekazanych jako parametry.
+ */
+LZespolona  operator /= (LZespolona  &Skl1,  LZespolona  const &Skl2)
+{
+  LZespolona  Wynik;
+  
+  if ((((pow(Skl2.re, 2)==0)&&(pow(Skl2.im, 2)==0)))) 
+    {
+      throw std::runtime_error("Math error: Attempted to divide by Zero\n");
+    }
+  (Wynik.re) = 0;
+  (Wynik.im) = 0;
+  if (((pow(Skl2.re, 2)+pow(Skl2.im, 2)!=0)))         /*sprawdzam czy sprzezenie nie jest zerem*/
+   { 
+    if(Wynik.re==0 && Wynik.im==0) 
+    {
+      Wynik.re = Wynik.re + (((Skl1.re*Skl2.re)+(Skl1.im*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2)));           /*korzystam z przeksztalconego wzoru sprzezenia*/
+      Wynik.im = Wynik.im + (((Skl1.im*Skl2.re)-(Skl1.re*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2)));
+    }
+    else if((((Skl1.re*Skl2.re)+(Skl1.im*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2)))==0)
+    {
+      throw std::runtime_error("Math error: Attempted to divide by Zero\n");
+    }
+    else if(Wynik.re!=0 || Wynik.im!=0)
+    {
+      Wynik.re = Wynik.re / (((Skl1.re*Skl2.re)+(Skl1.im*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2)));           /*korzystam z przeksztalconego wzoru sprzezenia*/
+      Wynik.im = Wynik.im / (((Skl1.im*Skl2.re)-(Skl1.re*Skl2.im))/(pow(Skl2.re, 2)+pow(Skl2.im, 2)));
+    }
+   }
+  return Wynik;
+}
+/*************************************************************************************************************/
+
+double arg(LZespolona z)
+{
+  double fi;
+  if(z.re!=0)
+  {
+    if(z.re>0)
+      {
+        fi=atan2(z.im, z.re);
+      }
+    else if(z.re<0)
+      {
+        fi=atan2(z.im, z.re)+M_PI;
+      }
+  }
+  if(z.re==0)
+  {
+    if(z.im>0)
+      {
+        fi=(0.5)*M_PI;
+      }
+    if(z.im<0)
+      {
+        fi=(-0.5)*M_PI;
+      }
+    if(z.im==0)
+      {
+        throw std::runtime_error("  argument jest nieokreslony");
+      }
+  }
+  std::cout << fi << std::endl;
+  return fi;
+}
+
 
 
 /* Wyswietl LZespolona*/

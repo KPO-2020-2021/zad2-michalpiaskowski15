@@ -96,12 +96,33 @@ int main(int argc, char **argv)
       std::cout << "Teraz przejdziesz do kolejnego przykladu." << std::endl;
       
   }
-  
+  LZespolona z, z1, z2, z3, z4;
+  z.re = 1;
+  z.im = 1;
+  z1.re = -1;
+  z1.im = 1;
+  z2.re = 0;
+  z2.im = 1;
+  z3.re = 0;
+  z3.im = -1;
+  z4.re = 0;
+  z4.im = 0;
+
+
 
   std::cout << std::endl;
   std::cout << " Koniec testu" << std::endl;
   std::cout << s.ilosc_pytan << std::endl;
   Statystyka(s.poprawne, s.niepoprawne, s.ilosc_pytan);
   std::cout << std::endl;
+  try
+  {
+    arg(z); arg(z1); arg(z2); arg(z3); arg(z4);
+  }
+  catch(std::exception& e)
+  {
+    std::cout << "wyjatek:" << e.what() << '\n';
+  }
+  
 
 }
